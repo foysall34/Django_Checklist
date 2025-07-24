@@ -45,6 +45,7 @@ cloudinary.config(
   api_key = config("CLOUD_API_KEY"), 
   api_secret = config("CLOUD_API_SECRET") 
 )
+LOGMEAL_API_KEY = config('LOGMEAL_API_KEY')
 
 
 

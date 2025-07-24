@@ -7,3 +7,9 @@ class MediaItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MediaItem
         fields = '__all__'
+
+
+
+
+class FoodImageSerializer(serializers.Serializer):
+    image = serializers.ImageField()

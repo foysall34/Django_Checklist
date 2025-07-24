@@ -5,6 +5,10 @@ from rest_framework import status
 from .models import MediaItem
 from .serializers import MediaItemSerializer
 import cloudinary.uploader
+from .serializers import FoodImageSerializer
+import requests
+from django.conf import settings 
+
 
 @api_view(['GET', 'POST'])
 def media_item_list_create(request):
@@ -54,3 +58,29 @@ def media_item_list_create(request):
         )
         serializer = MediaItemSerializer(media_item)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+# for 3rd party api intregation (LogMeal)
+
+LOGMEAL_API_KEY = settings.LOGMEAL_API_KEY
+
+@api_view(['POST'])
+def detect_food(request):
+    serializer = FoodImageSerializer(data=request.data)
+    if serializer.is_valid():
+        image = serializer.validated_data['image']
+
+        # LogMeal এ image পাঠাতে হবে file format এ
+        files = {'image': image}
+        headers = {'Authorization': f'Bearer {LOGMEAL_API_KEY}'}
+
+        try:
+            res = requests.post(
+                'https://api.logmeal.es/v2/image/recognition/complete',
+                files=files,
+                headers=headers
+            )
+            return Response(res.json(), status=res.status_code)
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
+
+    return Response(serializer.errors, status=400)

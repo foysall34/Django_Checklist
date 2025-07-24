@@ -9,7 +9,7 @@ class MediaItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
+# for logMeal api intregation 
 
 class FoodImageSerializer(serializers.Serializer):
     image = serializers.ImageField()

@@ -5,5 +5,6 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('myapp/' , include('myapp.urls')),
-    path('cloud/' , include('cloudi.urls'))
+    path('cloud/' , include('cloudi.urls')),
+    path('g_auth/' , include('g_auth.urls'))
 ]

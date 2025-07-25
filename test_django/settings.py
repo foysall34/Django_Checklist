@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'myapp',
     'cloudi' ,
     'jwt_authen',
+    'chatbot',
     'rest_framework',
     'cloudinary',
     'cloudinary_storage',

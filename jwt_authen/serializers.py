@@ -70,7 +70,7 @@ class ResetPasswordSerializer(serializers.Serializer):
     def validate(self, data):
         if data['new_password'] != data['confirm_password']:
             raise serializers.ValidationError("Passwords do not match.")
-        validate_password(data['new_password'])  # Optional: checks strength
+        validate_password(data['new_password']) 
         return data
 
     def save(self):

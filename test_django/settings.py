@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'cloudi' ,
     'jwt_authen',
     'chatbot',
+    'step_coach' , 
+    'channel',
     'rest_framework',
     'cloudinary',
     'cloudinary_storage',
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
     'social_django',
     'django.contrib.sites',
     'rest_framework_simplejwt',
+    'channels'
     
 ]
 
@@ -135,7 +138,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'test_django.wsgi.application'
-
+ASGI_APPLICATION = 'test_django.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

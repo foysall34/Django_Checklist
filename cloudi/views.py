@@ -5,10 +5,12 @@ from rest_framework import status
 from .models import MediaItem
 from .serializers import MediaItemSerializer
 import cloudinary.uploader
-from .serializers import FoodImageSerializer
+from .serializers import FoodImageSerializer , APIUserSerializer
 import requests
 from django.conf import settings 
-
+from rest_framework.views import APIView
+from .models import APIUser
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET', 'POST'])
 def media_item_list_create(request):
@@ -84,3 +86,28 @@ def detect_food(request):
             return Response({'error': str(e)}, status=500)
 
     return Response(serializer.errors, status=400)
+
+
+
+
+# for logMeal
+import uuid
+
+class APIUserCreateView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+
+        if APIUser.objects.filter(user=user).count() >= 5:
+            return Response({'error': 'You can only register up to 3 API users.'}, status=400)
+
+        data = request.data.copy()
+        data['user'] = user.id
+        data['token'] = str(uuid.uuid4())[:16]  
+
+        serializer = APIUserSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)

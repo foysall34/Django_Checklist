@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Chat</title>
+</head>
+<body>
+    <h2>Chat Window</h2>
+    <textarea id="chat-log" cols="100" rows="10" readonly></textarea><br>
+    <input type="text" id="chat-message-input" autocomplete="off"/>
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        const socket = new WebSocket("ws://" + window.location.host + "/ws/chat/");
+        const log = document.getElementById("chat-log");
+        const input = document.getElementById("chat-message-input");
+
+        socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            log.value += "Bot: " + data.message + "\n";
+        };
+
+        function sendMessage() {
+            const message = input.value;
+            log.value += "You: " + message + "\n";
+            socket.send(JSON.stringify({"message": message}));
+            input.value = "";
+        }
+    </script>
+</body>
+</html>

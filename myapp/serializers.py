@@ -15,3 +15,8 @@ class ItemSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = MediaItem
 #         fields = '__all__'
+
+
+
+
+

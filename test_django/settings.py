@@ -50,25 +50,21 @@ INSTALLED_APPS = [
     'channel',
     'rest_framework',
     'cloudinary',
+    'mymiddleware',
     'cloudinary_storage',
     'rest_framework_simplejwt.token_blacklist',
     'social_django',
     'django.contrib.sites',
     'rest_framework_simplejwt',
-    'channels'
+    'channels',
+    'middleware',
     
 ]
 
 AUTH_USER_MODEL='jwt_authen.User'
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
+
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
@@ -94,9 +90,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ],
 }
 
 
@@ -117,6 +116,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mymiddleware.middleware.request_logger.RequestLoggerMiddleware', 
 ]
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
@@ -137,8 +137,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'test_django.wsgi.application'
+# WSGI_APPLICATION = 'test_django.wsgi.application'
 ASGI_APPLICATION = 'test_django.asgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

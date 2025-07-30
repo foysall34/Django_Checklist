@@ -5,7 +5,7 @@ from .models import User
 
 class UserAdmin(BaseUserAdmin):
     ordering = ['id']
-    list_display = ['email', 'is_staff', 'is_verified']
+    list_display = [ 'id', 'email', 'is_staff', 'is_verified']
     search_fields = ['email']
     
     fieldsets = (

@@ -12,5 +12,6 @@ urlpatterns = [
     path('chatbot/' , include('chatbot.urls')),
     path('addict/' , include('step_coach.urls')),
     path('', TemplateView.as_view(template_name='chat.html')),
-    path('middleware/' , include('mymiddleware.urls'))
+    path('middleware/' , include('mymiddleware.urls')),
+    path('custom_permission/' , include('custom_permission.urls')),
 ]

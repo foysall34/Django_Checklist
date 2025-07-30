@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'chatbot',
     'step_coach' , 
     'channel',
+    'custom_permission',
     'rest_framework',
     'cloudinary',
     'mymiddleware',

@@ -14,4 +14,5 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='chat.html')),
     path('middleware/' , include('mymiddleware.urls')),
     path('custom_permission/' , include('custom_permission.urls')),
+    path('stripe/' , include('mystripe.urls')),
 ]

@@ -5,7 +5,9 @@ from decouple import config
 
 from pathlib import Path
 from datetime import timedelta
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -17,9 +19,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4i212lkaoq@sto#3#qu-8!yei&5gp42wf$^ud&$=4*cr^!ge)d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+
+DEBUG=config('DEBUG', default=True, cast=bool)
+
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "https://your-frontend-domain.com",
+]
 
 
 # Application definition
@@ -47,6 +56,7 @@ INSTALLED_APPS = [
     'jwt_authen',
     'chatbot',
     'step_coach' , 
+    'mystripe',
     'channel',
     'custom_permission',
     'rest_framework',
@@ -65,7 +75,9 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL='jwt_authen.User'
 
 
-
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
